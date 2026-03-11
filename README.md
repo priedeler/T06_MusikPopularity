@@ -8,8 +8,10 @@ The repository is organized as follows:
 - **`01_Data_Cleaning/`**: Contains the data processing and filtering notebooks.
   - `Data_Cleaning.ipynb`: Preprocessing, balancing, and filtering of the raw dataset.
 - **`02_Models/`**: Contains machine learning models and implementation.
-  - `Naive_Bayes.ipynb`: Implementation and comparison of Gaussian, Categorical, and Multinomial Naive Bayes models.
-  - `knn.py`: Placeholder for K-Nearest Neighbors implementation.
+  - **`Naive_Bayes/`**:
+    - `Naive_Bayes.ipynb`: Implementation and comparison of Gaussian, Categorical, and Multinomial Naive Bayes models.
+  - **`KNN/`**:
+    - `knn.py`: Placeholder for K-Nearest Neighbors implementation.
 - **`requirements.txt`**: Python dependencies.
 
 
