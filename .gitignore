@@ -33,3 +33,7 @@ build/
 env/
 __pycache__/
 *.pyc
+
+# Large data files
+master_dataset_enriched.csv
+final_processed_dataset.xlsx
