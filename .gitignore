@@ -35,5 +35,7 @@ __pycache__/
 *.pyc
 
 # Large data files
-master_dataset_enriched.csv
-final_processed_dataset.xlsx
+data/master_dataset_enriched.csv
+data/final_processed_dataset.xlsx
+data/final_processed_dataset.csv
+data/final_processed_dataset_V2.csv
