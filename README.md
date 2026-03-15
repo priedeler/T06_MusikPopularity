@@ -18,7 +18,6 @@ The repository is organized as follows:
     - `Lyrics_Analysis.ipynb`: Exploration of using song lyrics for popularity prediction.
   - **`KNN/`**:
     - `data mining project.ipynb`: Comprehensive implementation of K-Nearest Neighbors, along with Logistic Regression and Random Forest comparisons.
-    - `knn.py`: Script placeholder for standalone KNN implementation.
 - **`requirements.txt`**: Python dependencies required to run the notebooks.
 
 ## Key Methodology & Findings
