@@ -20,18 +20,5 @@ The repository is organized as follows:
     - `data mining project.ipynb`: Comprehensive implementation of K-Nearest Neighbors, along with Logistic Regression and Random Forest comparisons.
 - **`requirements.txt`**: Python dependencies required to run the notebooks.
 
-## Key Methodology & Findings
-### Data Processing
-To ensure a high-quality model, the dataset was filtered to include only modern songs (Release Year >= 2000) and to exclude podcasts or audiobooks (Speechiness < 0.5). We defined a "hit" as a track with a popularity score >= 50 and balanced the dataset to prevent class bias.
-
-### Model Optimization
-Our research highlighted the importance of feature representation:
-- **Gaussian Naive Bayes**: Provided a strong baseline by assuming normal distribution of features.
-- **Categorical Naive Bayes**: By discretizing continuous features into "brackets," we could capture non-linear patterns.
-- **Hyperparameter Tuning**: We benchmarked bin sizes from 2 to 20. The optimal configuration (9 bins) achieved an accuracy of **0.8059**, outperforming the Gaussian baseline (**0.7969**).
-
-## Conclusion
-The results suggest that song popularity is often better predicted by identifying specific "zones" of audio features (e.g., specific tempo ranges or loudness levels) rather than relying strictly on the exact continuous values.
-
 ---
 *Note: The raw dataset `data/master_dataset_enriched.csv` is not included in the repository due to its size.*
