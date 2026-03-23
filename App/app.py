@@ -3,12 +3,6 @@ import pandas as pd
 import joblib
 import numpy as np
 import os
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
-from dotenv import load_dotenv
-
-# Load environment variables if .env exists
-load_dotenv()
 
 # Set page title
 st.set_page_config(page_title="Song Hit Predictor", page_icon="🎵")
@@ -20,7 +14,7 @@ This app predicts whether a song will become a **HIT** (Spotify popularity score
 Input the song's features below and choose a model to see the prediction!
 """)
 
-# Sidebar for Model Selection and Spotify API
+# Sidebar for Model Selection
 st.sidebar.header("Configuration")
 
 # 1. Model Selection
@@ -33,20 +27,6 @@ model_options = {
 }
 selected_model_name = st.sidebar.selectbox("Choose a model", list(model_options.keys()))
 
-# 2. Spotify API Credentials
-st.sidebar.subheader("Spotify API (Required for Fetching)")
-st.sidebar.info("Get your credentials at [developer.spotify.com](https://developer.spotify.com/dashboard)")
-client_id = st.sidebar.text_input("Client ID", value=os.getenv("SPOTIPY_CLIENT_ID", ""), type="password")
-client_secret = st.sidebar.text_input("Client Secret", value=os.getenv("SPOTIPY_CLIENT_SECRET", ""), type="password")
-redirect_uri = st.sidebar.text_input("Redirect URI", value=os.getenv("SPOTIPY_REDIRECT_URI", "http://127.0.0.1:8080/callback"))
-
-if st.sidebar.button("🗑️ Reset Spotify Login/Cache"):
-    if os.path.exists(".cache"):
-        os.remove(".cache")
-        st.sidebar.success("Cache cleared! Try fetching again.")
-    else:
-        st.sidebar.info("No cache file found.")
-
 # Initialize default slider values in session state
 if 'features' not in st.session_state:
     st.session_state['features'] = {
@@ -55,10 +35,10 @@ if 'features' not in st.session_state:
         'speechiness': 0.08, 'instrumentalness': 0.02
     }
 
-# Spotify Fetching Logic
+# Track Selection Logic
 st.header("🎵 Choose a Song to Test")
 
-# 1. New: Sample Tracks from Dataset (Ensures demo works even without API)
+# Sample Tracks from Dataset
 sample_tracks = {
     "--- Select a Sample Song ---": None,
     "Hypothetical Pop Hit (High Energy)": [0.01, 0.8, 0.9, 0.7, 128.0, -4.5, 0.05, 0.0],
@@ -76,56 +56,6 @@ if selected_sample != "--- Select a Sample Song ---":
         'speechiness': vals[6], 'instrumentalness': vals[7]
     }
     st.info(f"Loaded stats for: {selected_sample}")
-
-st.markdown("---")
-st.write("**OR: Fetch from Spotify (Requires API Keys)**")
-spotify_url = st.text_input("🔗 Paste Spotify Track Link", placeholder="https://open.spotify.com/track/...")
-
-if st.button("Fetch Features from Spotify"):
-    if not client_id or not client_secret or not redirect_uri:
-        st.error("Please provide Client ID, Secret, and Redirect URI in the sidebar to use this feature.")
-    elif not spotify_url:
-        st.error("Please paste a Spotify track URL.")
-    else:
-        try:
-            # Setup Spotify OAuth
-            auth_manager = SpotifyOAuth(
-                client_id=client_id,
-                client_secret=client_secret,
-                redirect_uri=redirect_uri,
-                scope="user-read-private",
-                open_browser=False
-            )
-            sp = spotipy.Spotify(auth_manager=auth_manager)
-            
-            # Extract track ID
-            track_id = spotify_url.split("/")[-1].split("?")[0]
-            
-            # Step 1: Basic track info
-            track_info = sp.track(track_id)
-            st.info(f"Found song: **{track_info['name']}** by **{track_info['artists'][0]['name']}**.")
-            
-            # Step 2: Audio features
-            features_list = sp.audio_features([track_id])
-            features = features_list[0] if features_list else None
-            
-            if features:
-                st.session_state['features'] = {
-                    'acousticness': features['acousticness'],
-                    'danceability': features['danceability'],
-                    'energy': features['energy'],
-                    'valence': features['valence'],
-                    'tempo': features['tempo'],
-                    'loudness': features['loudness'],
-                    'speechiness': features['speechiness'],
-                    'instrumentalness': features['instrumentalness']
-                }
-                st.success(f"Successfully fetched features for **{track_info['name']}**!")
-                st.rerun()
-            else:
-                st.error("⚠️ **Spotify API Restriction (403)**: Spotify found the song but refused to share its audio stats. As of Nov 2024, Spotify has limited this data to 'Verified Apps' only. Please use the **Sample Song** dropdown or **Manual Sliders** for your demo.")
-        except Exception as e:
-            st.error(f"Error: {str(e)}")
 
 # Load the selected model
 @st.cache_resource
@@ -192,9 +122,6 @@ if st.button("Predict Hit status"):
             st.write(f"Model Confidence (Hit): {probabilities[1]:.2%}")
         except:
             pass
-
-st.sidebar.markdown("---")
-st.sidebar.write("Developed for T06 Musik Popularity project.")
 
 st.sidebar.markdown("---")
 st.sidebar.write("Developed for T06 Musik Popularity project.")
