@@ -9,3 +9,4 @@ kagglehub
 streamlit
 joblib
 spotipy
+python-dotenv
