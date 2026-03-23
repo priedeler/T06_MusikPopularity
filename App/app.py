@@ -17,6 +17,7 @@ Input the song's features below and choose a model to see the prediction!
 # Sidebar for Model Selection
 st.sidebar.header("Model Selection")
 model_options = {
+    "Ensemble (All Models)": "ensemble_all_models.joblib",
     "Random Forest": "random_forest.joblib",
     "K-Nearest Neighbors": "k-nearest_neighbors.joblib",
     "Logistic Regression": "logistic_regression.joblib",
