@@ -61,7 +61,6 @@ input_data = pd.DataFrame([[
 # Prediction
 if st.button("Predict Hit status"):
     prediction = model.predict(input_data)[0]
-    # probability = model.predict_proba(input_data)[0][1] # Not all models have predict_proba easily (KNN/NB do, but let's check)
     
     st.divider()
     if prediction == 1:
@@ -69,13 +68,44 @@ if st.button("Predict Hit status"):
     else:
         st.info("📉 **It might not be a hit.**")
         
-    # Optional: show probabilities if available
+    # Main Confidence Display
     try:
         probabilities = model.predict_proba(input_data)[0]
-        st.write(f"Confidence (Hit): {probabilities[1]:.2%}")
-        st.write(f"Confidence (Not Hit): {probabilities[0]:.2%}")
+        st.write(f"**Overall Ensemble Confidence (Hit):** {probabilities[1]:.2%}")
     except:
         pass
+
+    # Voting Breakdown (Specific for Ensemble)
+    if selected_model_name == "Ensemble (All Models)":
+        with st.expander("🔍 See Voting Breakdown", expanded=True):
+            st.write("How each individual model voted:")
+            
+            # Map of internal names to display names
+            display_names = {
+                'lr': 'Logistic Regression',
+                'knn': 'K-Nearest Neighbors',
+                'rf': 'Random Forest',
+                'nb': 'Naive Bayes'
+            }
+            
+            breakdown_data = []
+            for name, est in model.named_estimators_.items():
+                prob = est.predict_proba(input_data)[0]
+                pred = "Hit" if prob[1] >= 0.5 else "Not Hit"
+                breakdown_data.append({
+                    "Model": display_names.get(name, name),
+                    "Prediction": pred,
+                    "Confidence (Hit)": f"{prob[1]:.2%}"
+                })
+            
+            st.table(pd.DataFrame(breakdown_data))
+    else:
+        # Simple probability for individual models
+        try:
+            probabilities = model.predict_proba(input_data)[0]
+            st.write(f"Model Confidence (Hit): {probabilities[1]:.2%}")
+        except:
+            pass
 
 st.sidebar.markdown("---")
 st.sidebar.write("Developed for T06 Musik Popularity project.")
