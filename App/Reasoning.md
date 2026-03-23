@@ -27,7 +27,12 @@ To ensure the app's predictions are as accurate as the laboratory tests in our n
 *   **Automated Scaling**: Audio features vary wildly in scale (e.g., `loudness` is negative, `tempo` is in the hundreds). Our pipeline automatically applies a `StandardScaler` to every user input before it reaches the model.
 *   **Parity**: This ensures the data "seen" by the app is processed exactly like the data used during the training phase, preventing "training-serving skew."
 
-## 5. Dataset & Thresholds
+## 5. Spotify API Integration: Bridging Real Tracks to Predictions
+The app now includes a real-time bridge to the Spotify ecosystem via the **Spotify Web API**:
+*   **Automated Data Entry**: By using the `spotipy` library, users can paste a track URL, and the app will programmatically fetch the exact audio features (Tempo, Energy, etc.) from Spotify's servers.
+*   **User Credentials**: To maintain privacy and security, the app allows users to input their own `Client ID` and `Client Secret` within the session, ensuring a personalized and secure connection to the API.
+
+## 6. Dataset & Thresholds
 *   **Target Labeling**: Following our research findings, a song is classified as a **HIT** if its Spotify Popularity score exceeds **50**.
 *   **Features**: We focus on the "Spotify Big 8" audio features: Acousticness, Danceability, Energy, Valence, Tempo, Loudness, Speechiness, and Instrumentalness. These represent the technical "DNA" of a track.
 

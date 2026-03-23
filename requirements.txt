@@ -8,3 +8,4 @@ openpyxl
 kagglehub
 streamlit
 joblib
+spotipy
