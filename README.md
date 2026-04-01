@@ -18,6 +18,16 @@ The repository is organized as follows:
     - `Lyrics_Analysis.ipynb`: Exploration of using song lyrics for popularity prediction.
   - **`KNN/`**:
     - `data mining project.ipynb`: Comprehensive implementation of K-Nearest Neighbors, along with Logistic Regression and Random Forest comparisons.
+  ## 10A. Model Implementation Summary
+
+We implemented and compared three classifiers in a consistent pipeline setup.
+
+- **kNN:** `StandardScaler` + `KNeighborsClassifier`, tuned with `GridSearchCV` (4-fold stratified CV) over `n_neighbors`, `weights`, and distance metric (`p`).
+- **Logistic Regression:** `StandardScaler` + `LogisticRegression(max_iter=2000)` as a linear baseline.
+- **Random Forest:** `RandomForestClassifier(n_estimators=200)` as a non-linear ensemble baseline.
+
+All models were trained on the same train/test split and evaluated with Accuracy, Precision, Recall, F1, and ROC AUC to ensure a fair comparison.
+Lyrics-based features are covered separately in **Part B: Extending the Analysis with Lyrics**.
 - **`requirements.txt`**: Python dependencies required to run the notebooks.
 
 ---
