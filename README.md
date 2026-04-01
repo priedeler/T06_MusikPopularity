@@ -16,8 +16,6 @@ The repository is organized as follows:
   - **`Naive_Bayes/`**:
     - `Naive_Bayes.ipynb`: In-depth analysis of Naive Bayes variants. Includes Gaussian NB baseline and an optimized Categorical NB using hyperparameter tuning for bin/bracket sizes.
     - `Lyrics_Analysis.ipynb`: Exploration of using song lyrics for popularity prediction.
-  - **`KNN/`**:
-    - `data mining project.ipynb`: Comprehensive implementation of K-Nearest Neighbors, along with Logistic Regression and Random Forest comparisons.
 
 We implemented and compared three classifiers in a consistent pipeline setup.
 
