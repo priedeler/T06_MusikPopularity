@@ -18,7 +18,6 @@ The repository is organized as follows:
     - `Lyrics_Analysis.ipynb`: Exploration of using song lyrics for popularity prediction.
   - **`KNN/`**:
     - `data mining project.ipynb`: Comprehensive implementation of K-Nearest Neighbors, along with Logistic Regression and Random Forest comparisons.
-  ## 10A. Model Implementation Summary
 
 We implemented and compared three classifiers in a consistent pipeline setup.
 
