@@ -14,8 +14,15 @@ The repository is organized as follows:
   - `Data_Cleaning.ipynb`: Preprocessing and filtering logic. Filters songs released after 2000, removes non-music tracks (high speechiness), and balances the classes (50% hit / 50% non-hit).
 - **`02_Models/`**:
   - **`Naive_Bayes/`**:
-    - `Naive_Bayes.ipynb`: In-depth analysis of Naive Bayes variants. Includes Gaussian NB baseline and an optimized Categorical NB using hyperparameter tuning for bin/bracket sizes.
-    - `Lyrics_Analysis.ipynb`: Exploration of using song lyrics for popularity prediction.
+    - **`Naive_Bayes.ipynb`**: Comprehensive analysis of hit prediction using audio features.
+      - **Gaussian NB**: Establishes a baseline for continuous data (~79.7% accuracy).
+      - **Categorical NB**: Improves performance by discretizing audio features into "zones" using `KBinsDiscretizer`.
+      - **Optimization**: Hyperparameter tuning for bin sizes (optimal at 9 bins) reached **80.59% accuracy**.
+    - **`Lyrics_Analysis.ipynb`**: Natural Language Processing (NLP) focused on genre classification.
+      - **Pipeline**: Lowercasing, regex cleaning (removing structure tags like `[Chorus]`), stop word removal, and lemmatization.
+      - **Vectorization**: Employs **TF-IDF Vectorization** to weight unique lyrical themes.
+      - **Results**: Demonstrates that lyrics are highly predictive of genre, with detailed evaluation via confusion matrices for the top 10 most frequent genres.
+
 
 We implemented and compared three classifiers in a consistent pipeline setup.
 
@@ -24,7 +31,7 @@ We implemented and compared three classifiers in a consistent pipeline setup.
 - **Random Forest:** `RandomForestClassifier(n_estimators=200)` as a non-linear ensemble baseline.
 
 All models were trained on the same train/test split and evaluated with Accuracy, Precision, Recall, F1, and ROC AUC to ensure a fair comparison.
-Lyrics-based features are covered separately in **Part B: Extending the Analysis with Lyrics**.
+
 - **`requirements.txt`**: Python dependencies required to run the notebooks.
 
 ---
